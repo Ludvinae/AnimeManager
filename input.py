@@ -21,7 +21,11 @@ Que souhaitez-vous faire?
 Votre choix: """).strip()
         if menu in "123456" and len(menu) == 1:
             return menu
-        print("Commande non reconnue, veuillez entrer un chiffre entre 1 et 6")
+        return None
+
+
+def stop_display():
+    return input("Appuyer sur la touche Entrée pour continuer.")
 
 def file_overwrite():
     while True:
@@ -64,3 +68,14 @@ Année: """).strip()
                 break
 
         return {"titre": name, "année": date, "genre": genre, "vu": False}
+    
+
+def find_anime():
+    while True:
+        anime = input("""
+Veuillez entrer le nom de l'anime que vous voulez consulter
+Titre: """).strip()
+        if len(anime) > 0:
+            return anime
+        return None
+        

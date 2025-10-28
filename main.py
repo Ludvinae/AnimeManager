@@ -3,8 +3,8 @@ import os
 import input
 import file
 
-data = [{"titre": "Inception","année": 2010,"genre": "SF","vu": 1}, 
-        {"titre": "Titanic","année": 1997,"genre": "Romance","vu": 0}]
+data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": 1}, 
+        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": 0}]
 
 def main():
     if not os.path.exists("anime_database.csv"):
@@ -17,11 +17,11 @@ def main():
 
     while True:
         # Affiche le menu principal et la banniere
-        print(f"{banniere:^20}")
+        print(banniere)
         menu = input.main_menu()
 
         # Appelle la fonction selectionnée dans le menu
-        print(f"{banniere:^20}")
+        print(banniere)
         match menu:
             case "1":
                 break
@@ -30,7 +30,15 @@ def main():
                 for row in animeList:
                     print(anime_to_string(row))
             case "3":
-                pass
+                title = input.find_anime()
+                if title is None:
+                    print("Titre invalide")
+                else:
+                    anime = rechercher_anime(title)
+                    if anime is None:
+                        print("Impossible de trouver cet anime")
+                    else:
+                        print(anime_to_string(anime))
             case "4":
                 ajouter_anime()
             case "5":
@@ -38,8 +46,8 @@ def main():
             case "6":
                 pass
             case _ :
-                raise ValueError("Invalid menu item")
-
+                print("Commande non reconnue")
+        print(input.stop_display())
 
 def ajouter_anime():
     anime = input.add_anime_input()
@@ -56,8 +64,13 @@ def anime_to_string(row):
     vu = ", vu" if int(row['vu']) else ""
     return f"{row['titre']}: anime de type {row['genre']} sorti en {row['année']}{vu}."
 
-def rechercher_film(film):
-    pass
+def rechercher_anime(anime):
+    animeList = read_anime_list()
+    for row in animeList:
+        if row["titre"].lower() == anime.lower():
+            return row
+    return None
+    
 
 
 
