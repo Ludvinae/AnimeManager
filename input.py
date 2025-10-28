@@ -1,4 +1,27 @@
+import os
 
+def title():
+    os.system("cls" if os.name == "nt" else "clear")
+    return """
+-----------------------
+|    Anime Manager    |
+-----------------------"""
+
+
+def main_menu():
+    while True:
+        menu = input("""
+Que souhaitez-vous faire?
+1 - Quitter le programme
+2 - Consultez la liste des anime
+3 - Chercher un anime dans la liste
+4 - Ajouter un anime à la liste
+5 - Modifier le statut d'un anime
+6 - Supprimer un anime de la liste
+Votre choix: """).strip()
+        if menu in "123456" and len(menu) == 1:
+            return menu
+        print("Commande non reconnue, veuillez entrer un chiffre entre 1 et 6")
 
 def file_overwrite():
     while True:

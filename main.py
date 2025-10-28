@@ -9,18 +9,36 @@ data = [{"titre": "Inception","année": 2010,"genre": "SF","vu": 1},
 def main():
     if not os.path.exists("anime_database.csv"):
         file.file_creation(data)
-    else:
+    """else:
         if input.file_overwrite():
-            file.file_creation(data)
+            file.file_creation(data)"""
 
-    animeList = read_anime_list()
-    os.system("cls")
-    for row in animeList:
-        print(anime_to_string(row))
+    banniere = input.title()
+
     while True:
-        ajouter_anime()
-        break
-   
+        # Affiche le menu principal et la banniere
+        print(f"{banniere:^20}")
+        menu = input.main_menu()
+
+        # Appelle la fonction selectionnée dans le menu
+        print(f"{banniere:^20}")
+        match menu:
+            case "1":
+                break
+            case "2":
+                animeList = read_anime_list()
+                for row in animeList:
+                    print(anime_to_string(row))
+            case "3":
+                pass
+            case "4":
+                ajouter_anime()
+            case "5":
+                pass
+            case "6":
+                pass
+            case _ :
+                raise ValueError("Invalid menu item")
 
 
 def ajouter_anime():
@@ -40,6 +58,7 @@ def anime_to_string(row):
 
 def rechercher_film(film):
     pass
+
 
 
 if __name__ == '__main__':
