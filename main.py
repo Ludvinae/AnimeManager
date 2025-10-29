@@ -40,21 +40,25 @@ def main():
                     else:
                         print(anime_to_string(anime))
             case "4":
-                ajouter_anime()
+                if not ajouter_anime():
+                    print("Anime déjà present")
             case "5":
                 pass
             case "6":
-                pass
+                anime = input.delete_anime()
+                file.file_creation(supprimer_anime(anime))
             case _ :
                 print("Commande non reconnue")
         print(input.stop_display())
 
 def ajouter_anime():
     anime = input.add_anime_input()
-
     # fonction pour verifier que l'anime n'ets pas encore dans la liste
+    if not rechercher_anime(anime):
+        file.add_anime(anime)
+        return True
+    return False
 
-    file.add_anime(anime)
 
 def read_anime_list():
     data = file.file_read()
@@ -67,11 +71,16 @@ def anime_to_string(row):
 def rechercher_anime(anime):
     animeList = read_anime_list()
     for row in animeList:
-        if row["titre"].lower() == anime.lower():
+        if row["titre"].lower() == anime["titre"].lower():
             return row
     return None
     
-
+def supprimer_anime(titre):
+    newData = []
+    for anime in file.file_read():
+        if anime["titre"] != titre:
+            newData.append(anime)
+    return newData
 
 
 if __name__ == '__main__':

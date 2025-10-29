@@ -67,7 +67,7 @@ Année: """).strip()
                 date = int(date)
                 break
 
-        return {"titre": name, "année": date, "genre": genre, "vu": False}
+        return {"titre": name, "année": date, "genre": genre, "vu": 0}
     
 
 def find_anime():
@@ -78,4 +78,14 @@ Titre: """).strip()
         if len(anime) > 0:
             return anime
         return None
-        
+    
+
+def delete_anime():
+    while True:
+        anime = input("""
+Veuillez entrer le nom de l'anime que vous voulez supprimer
+Titre: """).strip()
+        if len(anime) > 0:
+            return anime
+        return None
+           
