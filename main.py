@@ -43,7 +43,8 @@ def main():
                 if not ajouter_anime():
                     print("Anime déjà present")
             case "5":
-                pass
+                titre = input.modify_status()
+                file.file_creation(voir(titre))
             case "6":
                 anime = input.delete_anime()
                 file.file_creation(supprimer_anime(anime))
@@ -79,6 +80,16 @@ def supprimer_anime(titre):
     newData = []
     for anime in file.file_read():
         if anime["titre"] != titre:
+            newData.append(anime)
+    return newData
+
+def voir(titre):
+    newData = []
+    for anime in file.file_read():
+        if anime["titre"] == titre:
+            anime["vu"] = 1
+            newData.append(anime)
+        else:
             newData.append(anime)
     return newData
 

@@ -88,4 +88,17 @@ Titre: """).strip()
         if len(anime) > 0:
             return anime
         return None
+    
+
+def modify_status():
+    while True:
+        anime = input("""
+Veuillez entrer le nom de l'anime que vous avez vu
+Titre: """).strip()
+        if len(anime) > 0:
+            return anime
+        return None
+    
+if __name__ == '__main__':
+    main_menu()
            
