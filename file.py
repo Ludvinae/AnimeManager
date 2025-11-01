@@ -25,5 +25,5 @@ def add_anime(anime: dict):
 
 def export_list():
     rows = file_read()
-    with open('anime_database.json', 'w', encoding='utf-8') as f:
-        json.dump(rows, f, ensure_ascii=False, indent=2)
+    with open('anime_database.json', 'w', encoding='utf-8') as file:
+        json.dump(rows, file, ensure_ascii=False, indent=2)

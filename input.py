@@ -8,19 +8,21 @@ def title():
 -----------------------"""
 
 
+def menu_options():
+    return """
+Que souhaitez-vous faire?
+[bold cyan]1[/bold cyan] - Quitter le programme
+[bold cyan]2[/bold cyan] - Consultez la liste des animes
+[bold cyan]3[/bold cyan] - Chercher un anime dans la liste
+[bold cyan]4[/bold cyan] - Ajouter un anime à la liste
+[bold cyan]5[/bold cyan] - Modifier le statut d'un anime
+[bold cyan]6[/bold cyan] - Supprimer un anime de la liste
+[bold cyan]7[/bold cyan] - Exporter la liste au format Json
+[bold cyan]8[/bold cyan] - Statistiques"""
+
 def main_menu():
     while True:
-        menu = input("""
-Que souhaitez-vous faire?
-1 - Quitter le programme
-2 - Consultez la liste des anime
-3 - Chercher un anime dans la liste
-4 - Ajouter un anime à la liste
-5 - Modifier le statut d'un anime
-6 - Supprimer un anime de la liste
-7 - Exporter la liste au format Json
-8 - Statistiques
-Votre choix: """).strip()
+        menu = input("Votre choix: ").strip()
         if menu in "12345678" and len(menu) == 1:
             return menu
         return None
@@ -29,17 +31,17 @@ Votre choix: """).strip()
 def stop_display():
     return input("Appuyer sur la touche Entrée pour continuer.")
 
-def file_overwrite():
+'''def file_overwrite():
     while True:
         overwrite = input("""
 Un fichier portant ce nom existe deja.
 Que voulez-vous faire?
-1 - Effacer le fichier et repartir de zero
-2 - Continuer à partir du même fichier
+[bold cyan]1[/bold cyan] - Effacer le fichier et repartir de zero
+[bold cyan]2[/bold cyan] - Continuer à partir du même fichier
 Votre choix: """).strip()
         if overwrite in "12" and len(overwrite) == 1:
             return True if overwrite == "1" else False
-        print("Commande non reconnue, veuillez entrer 1 ou 2")
+        print("Commande non reconnue, veuillez entrer 1 ou 2")'''
 
 
 def add_anime_input():
@@ -69,7 +71,7 @@ Année: """).strip()
                 date = int(date)
                 break
 
-        return {"titre": name, "année": date, "genre": genre, "vu": "False"}
+        return {"titre": name, "année": date, "genre": genre, "vu": False}
     
 
 def find_anime():

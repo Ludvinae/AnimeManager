@@ -1,10 +1,11 @@
 
 import os
+from rich import print
 import input
 import file
 
-data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": "True"}, 
-        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": "False"}]
+data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": True}, 
+        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": False}]
 
 def main():
     if not os.path.exists("anime_database.csv"):
@@ -15,6 +16,7 @@ def main():
     while True:
         # Affiche le menu principal et la banniere
         print(banniere)
+        print(input.menu_options())
         menu = menu_principal()
         if menu is None:
             break
@@ -37,20 +39,20 @@ def menu_principal():
                 string += anime_to_string(row) + "\n"
             return string
         case "3":
-            title = input.find_anime()
-            if title is None:
+            titre = input.find_anime()
+            if titre is None:
                 return "Titre invalide"
             else:
-                anime = rechercher_anime(title)
+                anime = rechercher_anime(titre)
                 if anime is None:
-                    return "Impossible de trouver cet anime"
+                    return f"Impossible de trouver {titre}"
                 else:
                     return anime_to_string(anime)
         case "4":
             return ajouter_anime()   
         case "5":
             titre = input.modify_status()
-            data, modification = voir(titre)
+            data, modification = marquer_comme_vu(titre)
             file.file_creation(data)
             return modification
         case "6":
@@ -64,6 +66,7 @@ def menu_principal():
         case "8":
             stats = statistiques()
             return f"""
+Statistiques:
 Nombre d'animes dans la liste: {stats["longueur"]}
 Animes vus / non vus: {stats["vu"]} / {stats["longueur"] - stats["vu"]}
 Genre le plus representé: {max(stats["genres"])}
@@ -75,12 +78,11 @@ Genre le plus representé: {max(stats["genres"])}
 
 def ajouter_anime():
     anime = input.add_anime_input()
-    print(anime)
     # fonction pour verifier que l'anime n'ets pas encore dans la liste
     if rechercher_anime(anime["titre"]) is not None:
-        return "Anime déjà présent dans la liste"
+        return f"{anime["titre"]} déjà présent dans la liste"
     file.add_anime(anime)
-    return "Anime correctement ajouté à la liste"
+    return f"{anime["titre"]} correctement ajouté à la liste"
     
 
 
@@ -104,20 +106,20 @@ def supprimer_anime(titre):
     suppression = "Aucun anime de ce nom n'as été trouvé"
     for anime in file.file_read():
         if anime["titre"] == titre:
-            suppression = "L'anime a bien été supprimé"
+            suppression = f"{titre} a bien été supprimé"
         else:
             newData.append(anime)
     return newData, suppression
 
-def voir(titre):
+def marquer_comme_vu(titre):
     newData = []
     modification = "Aucun Anime de ce nom n'as pu être trouvé"
     for anime in file.file_read():
         if anime["titre"] == titre:
             if anime["vu"] == "True":
-                modification = "Cet Anime était déjà marqué comme vu"
+                modification = f"{titre} était déjà marqué comme vu"
             else:
-                modification = "Cet Anime est désormais marqué comme vu"
+                modification = f"{titre} est désormais marqué comme vu"
             anime["vu"] = "True"
             newData.append(anime)
         else:
