@@ -67,7 +67,7 @@ Année: """).strip()
                 date = int(date)
                 break
 
-        return {"titre": name, "année": date, "genre": genre, "vu": 0}
+        return {"titre": name, "année": date, "genre": genre, "vu": "False"}
     
 
 def find_anime():

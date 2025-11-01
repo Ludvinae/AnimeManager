@@ -18,47 +18,63 @@ def main():
     while True:
         # Affiche le menu principal et la banniere
         print(banniere)
-        menu = input.main_menu()
-
+        menu = menu_principal()
+        if menu is None:
+            break
+        
         # Appelle la fonction selectionnée dans le menu
         print(banniere)
-        match menu:
-            case "1":
-                break
-            case "2":
-                animeList = read_anime_list()
-                for row in animeList:
-                    print(anime_to_string(row))
-            case "3":
-                title = input.find_anime()
-                if title is None:
-                    print("Titre invalide")
-                else:
-                    anime = rechercher_anime(title)
-                    if anime is None:
-                        print("Impossible de trouver cet anime")
-                    else:
-                        print(anime_to_string(anime))
-            case "4":
-                if not ajouter_anime():
-                    print("Anime déjà present")
-            case "5":
-                titre = input.modify_status()
-                file.file_creation(voir(titre))
-            case "6":
-                anime = input.delete_anime()
-                file.file_creation(supprimer_anime(anime))
-            case _ :
-                print("Commande non reconnue")
+        print(menu)
         print(input.stop_display())
+
+
+def menu_principal():
+    menu = input.main_menu()
+    match menu:
+        case "1":
+            return None
+        case "2":
+            animeList = read_anime_list()
+            string = ""
+            for row in animeList:
+                string += anime_to_string(row) + "\n"
+            return string
+        case "3":
+            title = input.find_anime()
+            if title is None:
+                return "Titre invalide"
+            else:
+                anime = rechercher_anime(title)
+                if anime is None:
+                    return "Impossible de trouver cet anime"
+                else:
+                    return anime_to_string(anime)
+        case "4":
+            return ajouter_anime()   
+        case "5":
+            titre = input.modify_status()
+            data, modification = voir(titre)
+            file.file_creation(data)
+            return modification
+        case "6":
+            anime = input.delete_anime()
+            data, suppression = supprimer_anime(anime)
+            file.file_creation(data)
+            return suppression
+        case _ :
+            return "Commande non reconnue"
+
+
 
 def ajouter_anime():
     anime = input.add_anime_input()
+    print(anime)
     # fonction pour verifier que l'anime n'ets pas encore dans la liste
-    if not rechercher_anime(anime):
-        file.add_anime(anime)
-        return True
-    return False
+    if rechercher_anime(anime["titre"]) is not None:
+        return "Anime déjà présent dans la liste"
+    file.add_anime(anime)
+    return "Anime correctement ajouté à la liste"
+    
 
 
 def read_anime_list():
@@ -66,32 +82,40 @@ def read_anime_list():
     return data
 
 def anime_to_string(row):
-    vu = ", vu" if int(row['vu']) else ""
+    vu = ", vu" if row['vu'] == "True" else ""
     return f"{row['titre']}: anime de type {row['genre']} sorti en {row['année']}{vu}."
 
-def rechercher_anime(anime):
+def rechercher_anime(titre:str):
     animeList = read_anime_list()
     for row in animeList:
-        if row["titre"].lower() == anime["titre"].lower():
+        if row["titre"].lower() == titre.lower():
             return row
     return None
     
 def supprimer_anime(titre):
     newData = []
+    suppression = "Aucun anime de ce nom n'as été trouvé"
     for anime in file.file_read():
-        if anime["titre"] != titre:
+        if anime["titre"] == titre:
+            suppression = "L'anime a bien été supprimé"
+        else:
             newData.append(anime)
-    return newData
+    return newData, suppression
 
 def voir(titre):
     newData = []
+    modification = "Aucun Anime de ce nom n'as pu être trouvé"
     for anime in file.file_read():
         if anime["titre"] == titre:
-            anime["vu"] = 1
+            if anime["vu"] == "True":
+                modification = "Cet Anime était déjà marqué comme vu"
+            else:
+                modification = "Cet Anime est désormais marqué comme vu"
+            anime["vu"] = "True"
             newData.append(anime)
         else:
             newData.append(anime)
-    return newData
+    return newData, modification
 
 
 if __name__ == '__main__':
