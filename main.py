@@ -61,6 +61,13 @@ def menu_principal():
         case "7":
             file.export_list()
             return "Les données ont été exportées"
+        case "8":
+            stats = statistiques()
+            return f"""
+Nombre d'animes dans la liste: {stats["longueur"]}
+Animes vus / non vus: {stats["vu"]} / {stats["longueur"] - stats["vu"]}
+Genre le plus representé: {max(stats["genres"])}
+"""
         case _ :
             return "Commande non reconnue"
 
@@ -116,6 +123,21 @@ def voir(titre):
         else:
             newData.append(anime)
     return newData, modification
+
+def statistiques():
+    liste = file.file_read()
+    longueur = len(liste)
+    vu = 0
+    genres = {}
+    for anime in liste:
+        if anime["vu"] == "True":
+            vu += 1
+        genre = anime["genre"]
+        if genre not in genres:
+            genres[genre] = 0
+        genres[genre] += 1
+
+    return {"longueur": longueur, "vu": vu, "genres": genres}
 
 
 if __name__ == '__main__':

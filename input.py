@@ -19,8 +19,9 @@ Que souhaitez-vous faire?
 5 - Modifier le statut d'un anime
 6 - Supprimer un anime de la liste
 7 - Exporter la liste au format Json
+8 - Statistiques
 Votre choix: """).strip()
-        if menu in "1234567" and len(menu) == 1:
+        if menu in "12345678" and len(menu) == 1:
             return menu
         return None
 
