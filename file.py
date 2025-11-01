@@ -1,4 +1,5 @@
 import csv
+import json
 
 def file_creation(data: list[dict]):
     with open("anime_database.csv", "w", encoding="utf-8", newline="") as file:
@@ -20,3 +21,9 @@ def add_anime(anime: dict):
         champs = ["titre", "année", "genre", "vu"]
         writer = csv.DictWriter(file, fieldnames=champs)
         writer.writerow(anime)
+
+
+def export_list():
+    rows = file_read()
+    with open('anime_database.json', 'w', encoding='utf-8') as f:
+        json.dump(rows, f, ensure_ascii=False, indent=2)

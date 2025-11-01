@@ -3,15 +3,12 @@ import os
 import input
 import file
 
-data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": 1}, 
-        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": 0}]
+data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": "True"}, 
+        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": "False"}]
 
 def main():
     if not os.path.exists("anime_database.csv"):
         file.file_creation(data)
-    """else:
-        if input.file_overwrite():
-            file.file_creation(data)"""
 
     banniere = input.title()
 
@@ -61,6 +58,9 @@ def menu_principal():
             data, suppression = supprimer_anime(anime)
             file.file_creation(data)
             return suppression
+        case "7":
+            file.export_list()
+            return "Les données ont été exportées"
         case _ :
             return "Commande non reconnue"
 

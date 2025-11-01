@@ -18,8 +18,9 @@ Que souhaitez-vous faire?
 4 - Ajouter un anime à la liste
 5 - Modifier le statut d'un anime
 6 - Supprimer un anime de la liste
+7 - Exporter la liste au format Json
 Votre choix: """).strip()
-        if menu in "123456" and len(menu) == 1:
+        if menu in "1234567" and len(menu) == 1:
             return menu
         return None
 
