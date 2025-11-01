@@ -21,11 +21,12 @@ def main():
         # Affiche le menu principal et la banniere
         print(banniere)
         print(input.menu_options())
+        # Appelle la fonction selectionnée dans le menu
         menu = menu_principal()
         if menu is None:
             break
         
-        # Appelle la fonction selectionnée dans le menu
+        # Affiche le résultat de l'option choisie dans le menu
         print(banniere)
         print(menu)
         print(input.stop_display())
