@@ -4,8 +4,12 @@ from rich import print
 import input
 import file
 
-data = [{"titre": "Chihayafuru","année": 2010,"genre": "Romance","vu": True}, 
-        {"titre": "Kingdom","année": 2008,"genre": "Shonen","vu": False}]
+data = [{"titre": "Chihayafuru","année": 2011,"genre": "Romance","vu": True}, 
+        {"titre": "Kingdom","année": 2012,"genre": "Shonen","vu": False},
+        {"titre": "Sousou no Frieren","année": 2023,"genre": "Adventure","vu": True},
+        {"titre": "Ace of diamond", "année": 2013, "genre": "Sport", "vu": True},
+        {"titre": "Gintama","année": 2006,"genre": "Comedy","vu": True},
+        {"titre": "Fullmetal alchemist","année": 2003,"genre": "Shonen","vu": True}]
 
 def main():
     if not os.path.exists("anime_database.csv"):
