@@ -118,11 +118,11 @@ def supprimer_anime(titre):
             newData.append(anime)
     return newData, suppression
 
-def marquer_comme_vu(titre):
+def marquer_comme_vu(titre:str):
     newData = []
     modification = "Aucun Anime de ce nom n'as pu être trouvé"
     for anime in file.file_read():
-        if anime["titre"] == titre:
+        if anime["titre"].lower() == titre.lower():
             if anime["vu"] == "True":
                 modification = f"{titre} était déjà marqué comme vu"
             else:
@@ -146,7 +146,9 @@ def statistiques():
             genres[genre] = 0
         genres[genre] += 1
 
-    return {"longueur": longueur, "vu": vu, "genres": genres}
+    genre = [key for key, value in genres.items() if value == max(genres.values())]
+
+    return {"longueur": longueur, "vu": vu, "genres": genre}
 
 
 if __name__ == '__main__':
