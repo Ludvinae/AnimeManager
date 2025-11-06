@@ -1,6 +1,6 @@
-
 import os
 from rich import print
+import Levenshtein
 import input
 import file
 
@@ -100,9 +100,11 @@ def anime_to_string(row):
     return f"{row['titre']}: anime de type {row['genre']} sorti en {row['année']}{vu}."
 
 def rechercher_anime(titre:str):
+    
     animeList = read_anime_list()
     for row in animeList:
-        if row["titre"].lower() == titre.lower():
+        dst = Levenshtein.distance(row["titre"].lower(), titre.strip().lower())
+        if dst < 3 or titre.strip().lower() in row["titre"].lower() :
             return row
     return None
     
